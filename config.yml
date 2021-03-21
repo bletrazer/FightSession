@@ -1,0 +1,8 @@
+plugin_prefix: "&l&6FightSession &f>> &r"
+lang_file: "FR_fr"
+message_levels:
+  info: "&e"
+  notification: "&a"
+  warning: "&c"
+  faillure: "&c"
+  error: "&4"

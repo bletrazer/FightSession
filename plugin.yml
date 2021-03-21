@@ -1,0 +1,16 @@
+name: FightSession
+version: 1.0
+description: Vise à dissuader les joueurs de se déconnecter lors des combats.
+author: Bletrazer
+api-version: 1.16
+main: fr.bletrazer.fightsession.Main
+commands:
+  fightsession:
+    description: Commande principal du plugin.
+    aliases: [fight, fights, fs]
+    
+permissions:
+  fightsession.reload:
+    description: Permission de recharger le plugin.
+    op: true
+    children: []

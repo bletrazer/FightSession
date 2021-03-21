@@ -21,7 +21,7 @@ public class PluginController {
 	}
 
 	public static void init() {
-		langManager.load();
+		langManager = LangManager.loadDefaults();
 
 	}
 

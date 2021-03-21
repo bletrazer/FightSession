@@ -11,6 +11,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import fr.bletrazer.fightsession.Main;
+
 /**
  * Donne des methodes pour la gestion des fichiers config;
  * 
@@ -26,14 +27,26 @@ public abstract class ConfigController {
 		this.file = new File(folderPath + File.separator + fileName);
 		this.defaultRessource = defaultRessource;
 	}
-	
+
+	protected void setFolderPath(String newFolderPath) {
+		this.folder = new File(newFolderPath);
+	}
+
+	protected void setFile(String newFileName) {
+		this.file = new File(this.folder + File.separator + newFileName);
+	}
+
+	protected void setDefaultRessource(String newDefaultRessource) {
+		this.defaultRessource = newDefaultRessource;
+	}
+
 	protected abstract void onLoad();
 
 	protected abstract void onSave();
-	
+
 	/**
 	 * Charge ou recharger le fichier<br>
-	 *      créer ou re créer le fichier config depuis les champs si inexistant
+	 * créer ou re créer le fichier config depuis les champs si inexistant
 	 */
 	public void load() {
 		if (!folder.exists()) {
@@ -72,16 +85,18 @@ public abstract class ConfigController {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
-	 * Ecrit le fichier par default sur l'emplacement cible dossier fichier <br><strong>/!\ Cette operation écrase l'ancien fichier</strong>
+	 * Ecrit le fichier par default sur l'emplacement cible dossier fichier <br>
+	 * <strong>/!\ Cette operation écrase l'ancien fichier</strong>
 	 */
 	protected void saveDefault() {
 		try {
 			file.createNewFile();
 
 		} catch (IOException e) {
-			Main.getInstance().getLogger().log(Level.SEVERE, "Could not create config to " + file.getName() + " to " + file.getPath());
+			Main.getInstance().getLogger().log(Level.SEVERE,
+					"Could not create config to " + file.getName() + " to " + file.getPath());
 			e.printStackTrace();
 		}
 

@@ -20,6 +20,7 @@ import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.projectiles.ProjectileSource;
 
 import fr.bletrazer.fightsession.FightSession;
+import fr.bletrazer.fightsession.Main;
 import fr.bletrazer.fightsession.PluginController;
 import fr.bletrazer.fightsession.utils.MessageLevel;
 import fr.bletrazer.fightsession.utils.MessageUtils;
@@ -154,11 +155,12 @@ public class FightsEvents implements Listener {
 			FightSession playerCombat = PluginController.getSessionManager().getSession(player.getUniqueId());
 
 			if (playerCombat != null) { // joueur deja en combat, reinitialise le combat
-				playerCombat.setTime(30);
+				playerCombat.setTime(Main.getInstance().getConfig().getInt("fight_time"));
 				playerCombat.addTarget(target);
 
 			} else { // crée un nouveau combat et le lance
-				FightSession combat = new FightSession(player, target, 30); // cr�er un nouveau combat
+				FightSession combat = new FightSession(player, target,
+						Main.getInstance().getConfig().getInt("fight_time")); // cr�er un nouveau combat
 				combat.startSession(); // Lance le nouveau combat
 				MessageUtils.sendMessage(player, MessageLevel.WARNING,
 						PluginController.getLangManager().getValue("notification_session_start"));

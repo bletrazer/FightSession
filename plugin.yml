@@ -1,16 +1,19 @@
 name: FightSession
 version: 1.0
-description: Vise à dissuader les joueurs de se déconnecter lors des combats.
+description: Fight Session is a plugin that engage players in a « fight mode » when they hit each other and prevents them
+   from running away using commands to teleport or if they disconnect during the combat time it will kill them.
 author: Bletrazer
 api-version: 1.16
 main: fr.bletrazer.fightsession.Main
 commands:
-  fightsession:
-    description: Commande principal du plugin.
-    aliases: [fight, fights, fs]
-    
+   fightsession:
+      description: Commande principal du plugin.
+      aliases:
+      - fight
+      - fights
+      - fs
 permissions:
-  fightsession.reload:
-    description: Permission de recharger le plugin.
-    op: true
-    children: []
+   fightsession.reload:
+      description: Permission de recharger le plugin.
+      op: true
+      children: []

@@ -1,8 +1,12 @@
 plugin_prefix: "&l&6FightSession &f>> &r"
 lang_file: "EN_en"
+
+fight_time: 30
+
 message_levels:
   info: "&e"
   notification: "&a"
   warning: "&c"
   faillure: "&c"
   error: "&4"
+  

@@ -62,11 +62,12 @@ public class CmdCombat implements CommandExecutor {
 										" " + PluginController.getLangManager().getValue("string_string_addition"));
 							}
 
-							MessageUtils.sendMessage(player, MessageLevel.INFO, "Vos cibles sont: %s", sb.toString());
+							MessageUtils.sendMessage(player, MessageLevel.INFO,
+									PluginController.getLangManager().getValue("command_targets", sb.toString()) );
 
 						} else {
 							MessageUtils.sendMessage(player, MessageLevel.INFO,
-									PluginController.getLangManager().getValue("command_time_2"));
+									PluginController.getLangManager().getValue("command_no_fight"));
 						}
 
 					} else if (args[0].equalsIgnoreCase(ARG_TIME)) {
@@ -113,7 +114,7 @@ public class CmdCombat implements CommandExecutor {
 					PluginController.getLangManager().getValue("command_time_1", playerCombat.getTime()));
 		} else {
 			MessageUtils.sendMessage(target, MessageLevel.INFO,
-					PluginController.getLangManager().getValue("command_time_2"));
+					PluginController.getLangManager().getValue("command_no_fight"));
 		}
 	}
 

@@ -88,31 +88,36 @@ public abstract class ConfigController {
 
 	/**
 	 * Ecrit le fichier par default sur l'emplacement cible dossier fichier <br>
-	 * <strong>/!\ Cette operation écrase l'ancien fichier</strong>
 	 */
-	protected void saveDefault() {
-		try {
-			file.createNewFile();
-
-		} catch (IOException e) {
-			Main.getInstance().getLogger().log(Level.SEVERE,
-					"Could not create config to " + file.getName() + " to " + file.getPath());
-			e.printStackTrace();
+	public void saveDefault() {
+		if (!folder.exists()) {
+			folder.mkdirs();
 		}
 
-		InputStream customClassStream = Main.getInstance().getResource(this.defaultRessource);
-		InputStreamReader strR = new InputStreamReader(customClassStream, Charset.forName("UTF-8"));
-		YamlConfiguration newConfig = YamlConfiguration.loadConfiguration(strR);
+		if (!file.exists()) {
+			try {
+				file.createNewFile();
 
-		try {
-			newConfig.save(file);
+			} catch (IOException e) {
+				Main.getInstance().getLogger().log(Level.SEVERE,
+						"Could not create config to " + file.getName() + " to " + file.getPath());
+				e.printStackTrace();
+			}
 
-		} catch (IOException e) {
-			Main.getInstance().getLogger().log(Level.SEVERE, "Could not save config: " + newConfig.getName());
-			e.printStackTrace();
+			InputStream customClassStream = Main.getInstance().getResource(this.defaultRessource);
+			InputStreamReader strR = new InputStreamReader(customClassStream, Charset.forName("UTF-8"));
+			YamlConfiguration newConfig = YamlConfiguration.loadConfiguration(strR);
+
+			try {
+				newConfig.save(file);
+
+			} catch (IOException e) {
+				Main.getInstance().getLogger().log(Level.SEVERE, "Could not save config: " + newConfig.getName());
+				e.printStackTrace();
+			}
+
+			this.configuration = newConfig;
 		}
-
-		this.configuration = newConfig;
 
 	}
 

@@ -15,7 +15,7 @@ public class MessageUtils {
 	public static void sendMessage(CommandSender target, MessageLevel level, String msg) {
 		if (target != null) {
 			String tempMsg = msg.replace("§r", level.getColor());
-			String toSend = PLUGIN_PREFIX + level.getColor() + tempMsg;
+			String toSend = PLUGIN_PREFIX + level.getColor() + tempMsg.replace("&", "§");
 
 			target.sendMessage(toSend);
 

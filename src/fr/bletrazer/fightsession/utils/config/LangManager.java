@@ -32,9 +32,13 @@ public class LangManager extends ConfigController {
 	 * @return l'instance de LangManager utilisé
 	 */
 	public static LangManager loadDefaults() {
+		LangManager FR_fr = new LangManager(Main.getInstance().getDataFolder() + File.separator + "lang", "FR_fr.yml",
+				"FR_fr.yml");
+		FR_fr.saveDefault();
+
 		LangManager EN_en = new LangManager(Main.getInstance().getDataFolder() + File.separator + "lang", "EN_en.yml",
 				"EN_en.yml");
-		EN_en.load();
+		EN_en.saveDefault();
 
 		LangManager defaultLangManager = new LangManager(Main.getInstance().getDataFolder() + File.separator + "lang",
 				Main.getInstance().getConfig().getString("lang_file") + ".yml",
@@ -48,20 +52,7 @@ public class LangManager extends ConfigController {
 		String res = null;
 
 		try {
-			res = String.format(getValue(str), args);
-
-		} catch (IllegalFormatException e) {
-			res = str + " : §4wrong format§r";
-		}
-
-		return res;
-	}
-
-	public String format(String str, Object... args) {
-		String res = null;
-
-		try {
-			res = String.format(str, args);
+			res = String.format(this.getValue(str), args);
 
 		} catch (IllegalFormatException e) {
 			res = str + " : §4wrong format§r";
@@ -99,7 +90,6 @@ public class LangManager extends ConfigController {
 
 	@Override
 	protected void onLoad() {
-
 		if (configuration != null) {
 			Main.getInstance().getLogger().log(Level.INFO, "Lang file \"" + CFG_NAME + "\" loaded.");
 

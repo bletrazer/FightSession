@@ -1,7 +1,6 @@
 package fr.bletrazer.fightsession.listeners;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.UUID;
 
 import org.bukkit.GameMode;
@@ -34,7 +33,16 @@ import fr.bletrazer.fightsession.utils.MessageUtils;
  */
 public class FightsEvents implements Listener {
 
-	private static List<UUID> bypass = new ArrayList<>();
+	private static HashMap<UUID, Boolean> bypassMap = new HashMap<>();
+	private HashMap<UUID, TeleportCause> lastTeleportCauseMap = new HashMap<>();
+
+	private static Boolean allowChorus = true;
+	private static Boolean allowEnderpearls = true;
+
+	public static void initFightVars() {
+		allowChorus = Main.getInstance().getConfig().getBoolean("AllowChorus");
+		allowEnderpearls = Main.getInstance().getConfig().getBoolean("AllowEnderpearls");
+	}
 
 	/*
 	 * Lance ou relance un combat entre les joueurs qui se tapent
@@ -111,37 +119,51 @@ public class FightsEvents implements Listener {
 	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
 	private void onTeleport(PlayerTeleportEvent event) {
 		Player player = event.getPlayer();
-		TeleportCause cause = event.getCause();
 
-		if (cause != TeleportCause.ENDER_PEARL && cause != TeleportCause.CHORUS_FRUIT) {
-			if (PluginController.getSessionManager().getSession(player.getUniqueId()) != null
-					&& !bypass.contains(player.getUniqueId())) {
+		if (PluginController.getSessionManager().getSession(player.getUniqueId()) != null) {
+			TeleportCause cause = event.getCause();
+			Boolean cancelTP = true;
+
+			if (cause == TeleportCause.ENDER_PEARL) {
+				cancelTP = !allowEnderpearls;
+			}
+
+			if (cause == TeleportCause.UNKNOWN) {
+				TeleportCause lastTeleportCause = lastTeleportCauseMap.get(player.getUniqueId());
+
+				if (lastTeleportCause != null && lastTeleportCause == TeleportCause.CHORUS_FRUIT) {
+					cause = TeleportCause.CHORUS_FRUIT;
+
+				}
+
+			}
+
+			if (cause == TeleportCause.CHORUS_FRUIT || cause == TeleportCause.UNKNOWN) {
+				cancelTP = !allowChorus;
+
+			}
+
+			Boolean bypassState = bypassMap.get(player.getUniqueId());
+
+			if (bypassState != null && bypassState == true) {
+				cancelTP = true;
+				bypassMap.put(player.getUniqueId(), false);
+			}
+
+			if (cancelTP) {
 				event.setCancelled(true);
 				MessageUtils.sendMessage(player, MessageLevel.FAILLURE,
 						PluginController.getLangManager().getValue("event_teleport_impossible"));
+
 			}
+
+			lastTeleportCauseMap.put(player.getUniqueId(), cause);
 		}
+
 	}
 
-	public static boolean setBypass(UUID uuid, boolean bool) {
-
-		if (bool) {
-			if (FightsEvents.bypass.contains(uuid)) {
-				return false;
-
-			} else {
-				FightsEvents.bypass.add(uuid);
-				return true;
-			}
-		} else {
-			if (!FightsEvents.bypass.contains(uuid)) {
-				return false;
-
-			} else {
-				FightsEvents.bypass.remove(uuid);
-				return true;
-			}
-		}
+	public static void setBypass(UUID uuid, boolean bool) {
+		bypassMap.put(uuid, bool);
 	}
 
 	/***

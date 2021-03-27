@@ -3,6 +3,9 @@ lang_file: "EN_en"
 
 fight_time: 30
 
+AllowChorus: true
+AllowEnderpearls: true
+
 message_levels:
   info: "&e"
   notification: "&a"

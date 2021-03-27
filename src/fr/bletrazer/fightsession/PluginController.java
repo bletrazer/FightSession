@@ -1,8 +1,10 @@
 package fr.bletrazer.fightsession;
 
+import fr.bletrazer.fightsession.listeners.FightsEvents;
 import fr.bletrazer.fightsession.utils.MessageLevel;
 import fr.bletrazer.fightsession.utils.MessageUtils;
 import fr.bletrazer.fightsession.utils.config.LangManager;
+
 /**
  * Controller du plugin
  *
@@ -22,11 +24,12 @@ public class PluginController {
 
 	public static void init() {
 		langManager = LangManager.loadDefaults();
-
+		FightsEvents.initFightVars();
 	}
 
 	public static void reloadPlugin() {
 		Main.getInstance().reloadConfig();
+		FightsEvents.initFightVars();
 		MessageUtils.reload();
 		langManager.load();
 		MessageLevel.refresh();

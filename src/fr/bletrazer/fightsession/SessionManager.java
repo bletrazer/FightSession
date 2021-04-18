@@ -59,7 +59,7 @@ public class SessionManager {
 	 */
 	public void stopAll() {
 		for (FightSession fs : allFights.values()) {
-			fs.cancel();
+			fs.stopSession();
 
 		}
 

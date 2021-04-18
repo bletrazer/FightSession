@@ -39,9 +39,20 @@ public class FightsEvents implements Listener {
 	private static Boolean allowChorus = true;
 	private static Boolean allowEnderpearls = true;
 
+	private static String timer_options__display_mode = "bossbar";
+	private static String timer_options__refresh_mode = "ticks";
+	
+	private static String timer_options__time_format = "#0.00";
+
 	public static void initFightVars() {
 		allowChorus = Main.getInstance().getConfig().getBoolean("AllowChorus");
 		allowEnderpearls = Main.getInstance().getConfig().getBoolean("AllowEnderpearls");
+
+		timer_options__display_mode = Main.getInstance().getConfig().getString("timer_options.display_mode");
+		timer_options__refresh_mode = Main.getInstance().getConfig().getString("timer_options.refresh_mode");
+
+		timer_options__time_format = Main.getInstance().getConfig().getString("timer_options.time_format");
+
 	}
 
 	/*
@@ -123,7 +134,7 @@ public class FightsEvents implements Listener {
 		if (PluginController.getSessionManager().getSession(player.getUniqueId()) != null) {
 			TeleportCause cause = event.getCause();
 			Boolean cancelTP = true;
-
+			
 			if (cause == TeleportCause.ENDER_PEARL) {
 				cancelTP = !allowEnderpearls;
 			}
@@ -177,12 +188,17 @@ public class FightsEvents implements Listener {
 			FightSession playerCombat = PluginController.getSessionManager().getSession(player.getUniqueId());
 
 			if (playerCombat != null) { // joueur deja en combat, reinitialise le combat
-				playerCombat.setTime(Main.getInstance().getConfig().getInt("fight_time"));
+				playerCombat.setTime((double) Main.getInstance().getConfig().getInt("fight_time"));
 				playerCombat.addTarget(target);
 
 			} else { // crée un nouveau combat et le lance
 				FightSession combat = new FightSession(player, target,
-						Main.getInstance().getConfig().getInt("fight_time")); // cr�er un nouveau combat
+						(double) Main.getInstance().getConfig().getInt("fight_time")); // create a new fight
+				
+				combat.setTimerDisplayMode(timer_options__display_mode);
+				combat.setTimerRefreshMode(timer_options__refresh_mode);
+				combat.setTimeFormat(timer_options__time_format);
+				
 				combat.startSession(); // Lance le nouveau combat
 				MessageUtils.sendMessage(player, MessageLevel.WARNING,
 						PluginController.getLangManager().getValue("notification_session_start"));

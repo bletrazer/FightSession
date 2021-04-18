@@ -3,6 +3,11 @@ lang_file: "EN_en"
 
 fight_time: 30
 
+timer_options:
+   display_mode: "bossbar" # Or: none
+   refresh_mode: "ticks" # Or: seconds
+   time_format: "#0.00" # Or: #0.0 or #0
+
 AllowChorus: true
 AllowEnderpearls: true
 

@@ -63,7 +63,7 @@ public class CmdCombat implements CommandExecutor {
 							}
 
 							MessageUtils.sendMessage(player, MessageLevel.INFO,
-									PluginController.getLangManager().getValue("command_targets", sb.toString()) );
+									PluginController.getLangManager().getValue("command_targets", sb.toString()));
 
 						} else {
 							MessageUtils.sendMessage(player, MessageLevel.INFO,
@@ -111,7 +111,7 @@ public class CmdCombat implements CommandExecutor {
 	private void sendTimeLeft(FightSession playerCombat, Player target) {
 		if (playerCombat != null) {
 			MessageUtils.sendMessage(target, MessageLevel.INFO,
-					PluginController.getLangManager().getValue("command_time_1", playerCombat.getTime()));
+					PluginController.getLangManager().getValue("command_time_1", playerCombat.getFormattedTime()));
 		} else {
 			MessageUtils.sendMessage(target, MessageLevel.INFO,
 					PluginController.getLangManager().getValue("command_no_fight"));

@@ -11,6 +11,8 @@ timer_options:
 AllowChorus: true
 AllowEnderpearls: true
 
+action_on_leave: "kill_player" #Or: "drop_inventory_in_chest" or "drop_inventory_in_world" or "destroy_inventory" or "none"
+
 message_levels:
   info: "&e"
   notification: "&a"

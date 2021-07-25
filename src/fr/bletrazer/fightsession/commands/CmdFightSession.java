@@ -17,7 +17,7 @@ import fr.bletrazer.fightsession.utils.MessageUtils;
  * 
  *
  */
-public class CmdCombat implements CommandExecutor {
+public class CmdFightSession implements CommandExecutor {
 
 	public static final String CMD_LABEL = "fightsession";
 
@@ -38,8 +38,8 @@ public class CmdCombat implements CommandExecutor {
 					MessageUtils.sendMessage(sender, MessageLevel.INFO,
 							PluginController.getLangManager().getValue("command_reload"));
 				} else {
-					MessageUtils.sendMessage(sender, MessageLevel.ERROR,
-							PluginController.getLangManager().getValue("command_error_no_permission"));
+					MessageUtils.sendMessage(sender, MessageLevel.ERROR, PluginController.getLangManager()
+							.getValue("command_error_no_permission", "fightsession.reload"));
 				}
 			} else if (args[0].equalsIgnoreCase(ARG_HELP)) {
 				sendHelpMsg(sender);
@@ -53,25 +53,35 @@ public class CmdCombat implements CommandExecutor {
 
 				} else if (args.length == 1) {
 					if (args[0].equalsIgnoreCase(ARG_TARGETS)) {
-						if (playerCombat != null) {
-							String names = StringUtils.join(playerCombat.getTargetsNames(), ", ");
+						if (player.hasPermission("fightsession.targets")) {
+							if (playerCombat != null) {
+								String names = StringUtils.join(playerCombat.getTargetsNames(), ", ");
 
-							StringBuilder sb = new StringBuilder(names);
-							if (sb.toString().contains(",")) {
-								sb.replace(names.lastIndexOf(", "), names.lastIndexOf(", ") + 1,
-										" " + PluginController.getLangManager().getValue("string_string_addition"));
+								StringBuilder sb = new StringBuilder(names);
+								if (sb.toString().contains(",")) {
+									sb.replace(names.lastIndexOf(", "), names.lastIndexOf(", ") + 1,
+											" " + PluginController.getLangManager().getValue("string_string_addition"));
+								}
+
+								MessageUtils.sendMessage(player, MessageLevel.INFO,
+										PluginController.getLangManager().getValue("command_targets", sb.toString()));
+
+							} else {
+								MessageUtils.sendMessage(player, MessageLevel.INFO,
+										PluginController.getLangManager().getValue("command_no_fight"));
 							}
-
-							MessageUtils.sendMessage(player, MessageLevel.INFO,
-									PluginController.getLangManager().getValue("command_targets", sb.toString()));
-
 						} else {
-							MessageUtils.sendMessage(player, MessageLevel.INFO,
-									PluginController.getLangManager().getValue("command_no_fight"));
+							MessageUtils.sendMessage(sender, MessageLevel.ERROR, PluginController.getLangManager()
+									.getValue("command_error_no_permission", "fightsession.targets"));
 						}
 
 					} else if (args[0].equalsIgnoreCase(ARG_TIME)) {
-						sendTimeLeft(playerCombat, player);
+						if (player.hasPermission("fightsession.time")) {
+							sendTimeLeft(playerCombat, player);
+						} else {
+							MessageUtils.sendMessage(sender, MessageLevel.ERROR, PluginController.getLangManager()
+									.getValue("command_error_no_permission", "fightsession.time"));
+						}
 
 					} else {
 						MessageUtils.sendMessage(sender, MessageLevel.FAILLURE,
@@ -97,15 +107,20 @@ public class CmdCombat implements CommandExecutor {
 	}
 
 	private void sendHelpMsg(CommandSender sender) {
-		StringBuilder sb = new StringBuilder();
+		if (sender.hasPermission("fightsession.help")) {
+			StringBuilder sb = new StringBuilder();
 
-		sb.append(PluginController.getLangManager().getValue("command_help_header") + "§r\n");
-		sb.append(String.format(" - /fs targets §l>>§r %s§r\n",
-				PluginController.getLangManager().getValue("command_help_description_targets")));
-		sb.append(String.format(" - /fs time §l>>§r %s§r\n",
-				PluginController.getLangManager().getValue("command_help_description_time")));
+			sb.append(PluginController.getLangManager().getValue("command_help_header") + "§r\n");
+			sb.append(String.format(" - /fs targets §l>>§r %s§r\n",
+					PluginController.getLangManager().getValue("command_help_description_targets")));
+			sb.append(String.format(" - /fs time §l>>§r %s§r\n",
+					PluginController.getLangManager().getValue("command_help_description_time")));
 
-		MessageUtils.sendMessage(sender, MessageLevel.INFO, sb.toString());
+			MessageUtils.sendMessage(sender, MessageLevel.INFO, sb.toString());
+		} else {
+			MessageUtils.sendMessage(sender, MessageLevel.ERROR,
+					PluginController.getLangManager().getValue("command_error_no_permission", "fightsession.help"));
+		}
 	}
 
 	private void sendTimeLeft(FightSession playerCombat, Player target) {

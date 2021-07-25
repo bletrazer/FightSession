@@ -1,6 +1,6 @@
 command_error_console_not_allowed: "Can't execute this command from the console!"
-command_error_wrong_command: "This command does not exist, for more information on commands use /help."
-command_error_no_permission: "You don't have permission to execute this command."
+command_error_wrong_command: "This command does not exist, for more information on commands use /fightsession."
+command_error_no_permission: "You don't have permission to execute this command (permission: \".#1*\")."
 command_time_1: "You are in fight for another .#1* seconds."
 command_no_fight: "You are not in a fight"
 command_targets: "Your targets are: .#1*"

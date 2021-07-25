@@ -2,7 +2,7 @@ package fr.bletrazer.fightsession;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import fr.bletrazer.fightsession.commands.CmdCombat;
+import fr.bletrazer.fightsession.commands.CmdFightSession;
 import fr.bletrazer.fightsession.listeners.FightsEvents;
 /**
  * Classe principal du plugin FightSession
@@ -48,7 +48,7 @@ public class Main extends JavaPlugin {
 	 * Enregistre les commandes du plugin
 	 */
 	private void registerCommands() {
-		this.getCommand(CmdCombat.CMD_LABEL).setExecutor(new CmdCombat());
+		this.getCommand(CmdFightSession.CMD_LABEL).setExecutor(new CmdFightSession());
 
 	}
 

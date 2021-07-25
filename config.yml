@@ -7,6 +7,9 @@ timer_options:
    display_mode: "bossbar" # Or: none
    refresh_mode: "ticks" # Or: seconds
    time_format: "#0.00" # Or: #0.0 or #0
+   bossbar_display_otions:
+      color: "yellow"
+      style: "segmented_10"
 
 AllowChorus: true
 AllowEnderpearls: true

@@ -25,11 +25,13 @@ public class PluginController {
 	public static void init() {
 		langManager = LangManager.loadDefaults();
 		FightsEvents.initFightVars();
+		Bar.init();
 	}
 
 	public static void reloadPlugin() {
 		Main.getInstance().reloadConfig();
 		FightsEvents.initFightVars();
+		Bar.init();
 		MessageUtils.reload();
 		langManager.load();
 		MessageLevel.refresh();

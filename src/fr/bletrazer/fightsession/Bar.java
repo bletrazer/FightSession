@@ -8,10 +8,18 @@ import org.bukkit.entity.Player;
 
 public class Bar {
 
+	public static void init() {
+		color = BarColor.valueOf(
+				Main.getInstance().getConfig().getString("timer_options.bossbar_display_otions.color").toUpperCase());
+		style = BarStyle.valueOf(
+				Main.getInstance().getConfig().getString("timer_options.bossbar_display_otions.style").toUpperCase());
+
+	}
+
 	private BossBar bar;
 	private String title = "Empty title";
-	private BarColor color = BarColor.YELLOW;
-	private BarStyle style = BarStyle.SEGMENTED_10;
+	private static BarColor color = BarColor.BLUE;
+	private static BarStyle style = BarStyle.SOLID;
 
 	public Bar() {
 		bar = Bukkit.createBossBar(title, color, style);

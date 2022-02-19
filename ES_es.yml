@@ -1,0 +1,18 @@
+command_error_console_not_allowed: No puedes ejecutar este comando desde la consola!
+command_error_wrong_command: Este commando no existe, para mas informacion sobre
+  commandos usa /fightsession.
+command_error_no_permission: 'No tienes permiso para ejecutar este command (permiso:
+  ".#1*").'
+command_time_1: Estas en una pelea por .#1* segundos mas.
+command_no_fight: No estas en una pelea
+command_targets: 'Estas peleando con: .#1*'
+command_help_header: '---- FightSession plugin ayuda ----'
+command_help_description_targets: Muestra tus enemigos.
+command_help_description_time: Muestra cuantos segundos quedan para salir de
+  la batalla.
+event_teleport_impossible: 'Imposible: Estas en una pelea.'
+notification_session_start: Entras a una pelea!
+notification_session_stop: Sales de una pelea!
+string_string_addition: y
+command_reload: El plugin se ha reiniciado.
+timer_option_time_format: 'Tiempo de batalla restante: .#1*'
